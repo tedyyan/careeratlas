@@ -1,0 +1,10 @@
+.next/
+node_modules/
+.env*
+!.env.example
+npm-debug.log*
+
+# Runtime database files
+data/*.sqlite
+data/*.sqlite-shm
+data/*.sqlite-wal
