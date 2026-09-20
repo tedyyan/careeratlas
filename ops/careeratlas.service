@@ -1,0 +1,15 @@
+[Unit]
+Description=CareerAtlas Next.js app
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/ted/careeratlas
+Environment=NODE_ENV=production
+Environment=PATH=/home/ted/.nvm/versions/node/v22.23.2/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/home/ted/.nvm/versions/node/v22.23.2/bin/npm run start -- -H 127.0.0.1 -p 18002
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=default.target
