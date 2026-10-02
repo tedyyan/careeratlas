@@ -28,9 +28,16 @@ const careerHighlights: Record<string, string> = {
 };
 
 function careerQuestion(config: CareerExperienceConfig, task: WorkTask) {
-  const challenge = task.title.replace(/^The /, "A ").replace(/^Your /, "A ");
   const highlight = careerHighlights[config.slug] ?? `${config.title}s solve real problems and make thoughtful choices.`;
-  return `Imagine you're the ${config.title.toLowerCase()} today. ${challenge}. ${highlight} Would you like to take on this challenge?`;
+  const article = /^[aeiou]/i.test(config.title) ? "an" : "a";
+  const prompts: Record<WorkType, string> = {
+    Investigation: "Something does not look quite right. Would you like to look for clues and figure out what happened?",
+    Communication: "People need help understanding one another. Would you like to listen, explain, and help them move forward?",
+    Planning: "There is more than one possible next step. Would you like to compare the choices and make a plan?",
+    "Coding & testing": "An idea needs to be built and checked. Would you like to try it, test it, and improve it?",
+    Documentation: "Important details need to be made clear for the next person. Would you like to organize them and explain what happens next?",
+  };
+  return `Imagine you're ${article} ${config.title.toLowerCase()} today. ${highlight} ${prompts[task.workType]}`;
 }
 
 const softwareConfig: CareerExperienceConfig = {
