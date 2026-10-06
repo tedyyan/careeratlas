@@ -9,6 +9,8 @@ export type Career = {
   fit: string[];
 };
 
+import { additionalCareers } from "./additionalCareers";
+
 export const careers: Career[] = [
   {
     slug: "software-developer",
@@ -64,5 +66,6 @@ export const careers: Career[] = [
   { slug:"electrician",title:"Electrician",tagline:"Install, test, and troubleshoot the electrical systems that keep buildings working safely.",salary:"$62K",outlook:"+9%",education:"Apprenticeship common",ai:"Low replacement",fit:["Hands-on work","Troubleshooting","Safety"] },
   { slug:"physical-therapist",title:"Physical Therapist",tagline:"Help people restore movement and return to the activities that matter to them.",salary:"$101K",outlook:"+11%",education:"DPT + license",ai:"Support / human-led",fit:["Movement","Coaching","Healthcare"] },
   { slug:"marketing-manager",title:"Marketing Manager",tagline:"Connect audience insight, creative strategy, channels, and measurable growth.",salary:"$161K",outlook:"+7%",education:"Bachelor's common",ai:"High augmentation",fit:["Creativity","Strategy","Communication"] },
-  { slug:"architect",title:"Architect",tagline:"Turn human needs and complex constraints into spaces people can inhabit.",salary:"$96K",outlook:"+4%",education:"Degree + licensure",ai:"High augmentation",fit:["Design","Systems thinking","Collaboration"] }
+  { slug:"architect",title:"Architect",tagline:"Turn human needs and complex constraints into spaces people can inhabit.",salary:"$96K",outlook:"+4%",education:"Degree + licensure",ai:"High augmentation",fit:["Design","Systems thinking","Collaboration"] },
+  ...additionalCareers,
 ];

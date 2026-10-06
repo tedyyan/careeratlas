@@ -66,7 +66,12 @@ const addList = (table: string) => db.prepare(`INSERT INTO ${table} (career_slug
 
 db.transaction(() => {
   for (const career of careerSeed) {
-    const detail = careerEducation[career.slug];
+    const detail = careerEducation[career.slug] ?? {
+      overview: career.tagline,
+      educationPath: `A common entry path is ${career.education.toLowerCase()}. Requirements vary by employer, location, and specialty.`,
+      majors: [career.education],
+      knowledgeAreas: career.fit,
+    };
     upsertCareer.run({ ...career, overview: detail.overview, educationPath: detail.educationPath });
     for (const [table, values] of [
       ["career_fit", career.fit],

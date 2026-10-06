@@ -71,6 +71,21 @@ const profiles: Record<string, Scores> = {
 };
 const traitLabels: Record<Trait, string> = { analytical: "analysis and problem solving", social: "working with people", creative: "creative thinking", practical: "hands-on work", leadership: "leadership", science: "science", language: "language and communication", math: "math and data" };
 
+function inferProfile(career: StoredCareer): Scores {
+  const text = [career.title, career.tagline, ...career.fit, ...career.knowledgeAreas].join(" ").toLowerCase();
+  const score = (words: string[]) => 1 + words.reduce((total, word) => total + (text.includes(word) ? 2 : 0), 0);
+  return {
+    analytical: score(["analysis", "data", "problem", "research", "systems", "investigation"]),
+    social: score(["people", "care", "patient", "community", "help", "team", "teaching"]),
+    creative: score(["design", "creative", "art", "story", "music", "fashion"]),
+    practical: score(["hands-on", "build", "repair", "field", "safety", "mechanical", "outdoors"]),
+    leadership: score(["leadership", "strategy", "management", "planning", "decision"]),
+    science: score(["science", "health", "medicine", "biology", "chemistry", "physics", "environment"]),
+    language: score(["writing", "language", "communication", "law", "listening"]),
+    math: score(["math", "data", "finance", "engineering", "physics", "risk"]),
+  };
+}
+
 export default function CareerQuiz({ careers }: { careers: StoredCareer[] }) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Option[]>([]);
@@ -80,7 +95,7 @@ export default function CareerQuiz({ careers }: { careers: StoredCareer[] }) {
     return result;
   }, {}), [answers]);
   const results = useMemo(() => careers.map((career) => {
-    const profile = profiles[career.slug] ?? {};
+    const profile = profiles[career.slug] ?? inferProfile(career);
     const score = (Object.entries(profile) as [Trait, number][]).reduce((sum, [trait, weight]) => sum + (totals[trait] ?? 0) * weight, 0);
     const strengths = (Object.keys(profile) as Trait[]).sort((a, b) => (totals[b] ?? 0) * (profile[b] ?? 0) - (totals[a] ?? 0) * (profile[a] ?? 0)).slice(0, 2);
     return { career, score, strengths };
